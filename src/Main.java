@@ -8,25 +8,24 @@ public class Main {
         if (line == null || line.isEmpty()) { // проверка на пустую строку и null
             return "";
         }
-        char[] chars = line.toCharArray(); // массив символов из строки
-        char[] result = new char[chars.length]; // массив для результата метода
+        char[] chars = line.toCharArray();
+        int start = 0;
+        int end = chars.length - 1;
 
-        StringBuilder letters = new StringBuilder(); // изменяемая строка для хранения символов в обратном порядке
-        for (int i = chars.length - 1; i >= 0; i--) { // цикл с конца массива
-            if (Character.isLetter(chars[i])) { // условие, если символ буквенный
-                letters.append(chars[i]); // запись символа в строку
-            }
-        }
 
-        int letterIndex = 0; // переменная для индекса символа в изменяемой строке
-        for (int i = 0; i < chars.length; i++) { // цикл по массиву символом для корректной длины строки
-            if (Character.isLetter(chars[i])) { // проверка на буквенный символ
-                result[i] = letters.charAt(letterIndex); // запись буквенного символа из строки с обратным порядком
-                letterIndex++;
+        while (start < end) {
+            if (!Character.isLetter(chars[start])) {
+                start++;
+            } else if (!Character.isLetter(chars[end])) {
+                end--;
             } else {
-                result[i] = chars[i]; // запись не буквенного символа с сохранением позиции
+                char temp = chars[start];
+                chars[start] = chars[end];
+                chars[end] = temp;
+                start++;
+                end--;
             }
         }
-        return new String(result);
+        return new String(chars);
     }
 }
